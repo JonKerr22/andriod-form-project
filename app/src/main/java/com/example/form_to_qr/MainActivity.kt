@@ -18,6 +18,7 @@ import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_main.*
 import java.net.URL
 import java.util.Base64
+import org.apache.commons.mail.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -46,9 +47,44 @@ class MainActivity : AppCompatActivity() {
             val formJsonString = formConverter.EntryToJson(entryFromObj)
             val encodedFormString = Base64.getEncoder().encodeToString(formJsonString.toByteArray())
 
-            val newImgUrl = "https://api.qrserver.com/v1/create-qr-code/?size=50x50&data="
+            val newImgUrl = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data="
             val newImgSrc = newImgUrl + encodedFormString
-            Picasso.get().load(newImgSrc).resize(50,50).into(qrimgplace)
+            val testImgLink = newImgUrl + formJsonString
+
+            try{
+
+                //it just crashes idk why, fucking shit
+                SimpleEmail().apply {
+                    hostName = "smtp.googlemail.com"
+                    setSmtpPort(465)
+                    setAuthenticator(DefaultAuthenticator("jrkerr22@gmail.com", "wownerd2"))
+                    isSSLOnConnect = true
+                    setFrom("jrkerr22@gmail.com")
+                    subject = "test subject"
+                    setMsg(testImgLink)
+                    addTo("jon@homefieldcannabis.com")
+                }.send() // will throw email-exception if something is wrong
+
+                val success = true
+                /*HtmlEmail().apply{
+                    hostName = "smtp.office365.com"
+                    setSmtpPort(587)
+                    setAuthenticator(DefaultAuthenticator("jon@homefieldcannabis.com", "KyrAD70g3V3Cw10"))
+                    //isSSLOnConnect = true
+                    setFrom("jon@homefieldcannabis.com")
+                    subject = "test send"
+                    setHtmlMsg(testImgLink)
+                    addTo("jrkerr22@gmail.com")
+                }.send()*/
+            }
+            catch (e: Exception){
+                var bkpnttt = true
+            }
+
+
+
+            //THESE WERE the attempt to replace the imageview placeholder, am skipping for now tho
+            //Picasso.get().load("https://api.qrserver.com/v1/create-qr-code/?size=50x50&amp;data=rjsgnurnguiregh45nujnfun43onfs").resize(50,50).into(qrimgplace)
 
             //var imgURI = Uri.parse(newImgSrc)
             //var url = URL(newImgSrc)
@@ -61,7 +97,7 @@ class MainActivity : AppCompatActivity() {
             //qrimgplace.setImageBitmap(bmp)
             //qrimgplace.setImageURI(imgURI)
 
-            val bkpnt = true;
+            val bkpnt = true
         }
 
 22
