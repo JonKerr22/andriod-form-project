@@ -1,22 +1,28 @@
 package com.example.form_to_qr
 
-import android.media.Image
+import android.graphics.BitmapFactory
+import android.graphics.BitmapFactory.decodeStream
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
-import com.google.android.material.snackbar.Snackbar
-import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
-
+import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.snackbar.Snackbar
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.content_main.*
-import java.sql.Date
+import java.net.URL
+import java.util.Base64
+
 
 class MainActivity : AppCompatActivity() {
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -38,12 +44,27 @@ class MainActivity : AppCompatActivity() {
             entryFromObj.setNotes(entry_notes.text.toString())
 
             val formJsonString = formConverter.EntryToJson(entryFromObj)
+            val encodedFormString = Base64.getEncoder().encodeToString(formJsonString.toByteArray())
 
-            Toast.makeText(this@MainActivity, formJsonString, Toast.LENGTH_SHORT).show()
+            val newImgUrl = "https://api.qrserver.com/v1/create-qr-code/?size=50x50&data="
+            val newImgSrc = newImgUrl + encodedFormString
+            Picasso.get().load(newImgSrc).resize(50,50).into(qrimgplace)
+
+            //var imgURI = Uri.parse(newImgSrc)
+            //var url = URL(newImgSrc)
+            //var inStream = url.openStream()
+            //val bmp = decodeStream(inStream)
+            //var urlTest = URL
+            //imgURI.in
+            //var test = BitmapFactory.
+            //val bmp = BitmapFactory.decodeStream(imgURI.)
+            //qrimgplace.setImageBitmap(bmp)
+            //qrimgplace.setImageURI(imgURI)
+
             val bkpnt = true;
         }
 
-
+22
         fab.setOnClickListener { view ->
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show()
