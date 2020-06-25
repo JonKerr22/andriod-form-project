@@ -22,11 +22,14 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        PlantLogForm testForm = new PlantLogForm("06/20/20", "123", GrowthStage.MaturePlant, "ping");
+        final String formJson = testForm.toJsonString();
+
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                Snackbar.make(view, formJson, Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
         });
