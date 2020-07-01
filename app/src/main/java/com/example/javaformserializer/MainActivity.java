@@ -1,5 +1,7 @@
 package com.example.javaformserializer;
 
+import android.content.Context;
+import android.database.DataSetObserver;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -8,16 +10,26 @@ import com.google.android.material.snackbar.Snackbar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.view.LayoutInflater;
 import android.view.View;
 
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
 
 public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
+
+
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -33,6 +45,34 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+
+
+        setFirstFragmentView();
+        setSecondFragmentView();
+    }
+
+    private void setFirstFragmentView(){
+        View fragLayout = ((LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.fragment_first, null, false);
+
+        GrowthStage[] stages = GrowthStage.values();
+        String[] stagesStrings = new String[(stages.length + 1)];
+        stagesStrings[0] = " ";
+        for(int i=1;i<stagesStrings.length;i++){
+            stagesStrings[i] = stages[i-1].getName();
+        }
+
+        Spinner stagesOptions = fragLayout.findViewById(R.id.stageOptions);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, stagesStrings);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        stagesOptions.setAdapter(adapter);
+    }
+
+    private  void setSecondFragmentView(){
+        View fragLayout = ((LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.fragment_second, null, false);
+
+
+        int test = 0;
     }
 
     @Override
