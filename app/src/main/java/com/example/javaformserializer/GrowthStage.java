@@ -3,8 +3,8 @@ package com.example.javaformserializer;
 public enum GrowthStage {
     Arrival("Arrival"),
     Seedling("Seedling"),
-    GrowingPlant("GrowingPlant"),
-    MaturePlant("MaturePlant"),
+    GrowingPlant("Growing Plant"),
+    MaturePlant("Mature Plant"),
     Drying("Drying"),
     Exporting("Exporting");
 

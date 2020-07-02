@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -27,9 +28,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
-
-
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -37,19 +35,23 @@ public class MainActivity extends AppCompatActivity {
         PlantLogForm testForm = new PlantLogForm("06/20/20", "123", GrowthStage.MaturePlant, "ping");
         final String formJson = testForm.toJsonString();
 
+
+
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+
                 Snackbar.make(view, formJson, Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
         });
 
 
-        setFirstFragmentView();
-        setSecondFragmentView();
+        Boolean bkpnt = true;
     }
+
 
     private void setFirstFragmentView(){
         View fragLayout = ((LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.fragment_first, null, false);
@@ -63,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
 
         Spinner stagesOptions = fragLayout.findViewById(R.id.stageOptions);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, stagesStrings);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+       // adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         stagesOptions.setAdapter(adapter);
     }
